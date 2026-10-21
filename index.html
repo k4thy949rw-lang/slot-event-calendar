@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<title>スロナビ関西｜イベントカレンダー</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1220;color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+main{max-width:800px;margin:auto;padding:18px 14px 80px}
+h1{font-size:25px;margin:8px 0}
+h2{font-size:18px;margin:0 0 12px}
+p,small{color:#a9b7cb}
+.panel{background:#172238;border:1px solid #2b3c58;border-radius:16px;padding:15px;margin:14px 0}
+button,input,select{font:inherit;color:white;background:#24334d;border:1px solid #40516c;border-radius:9px;padding:10px}
+button{cursor:pointer}
+button.active{background:#4263eb;border-color:#4263eb}
+input{width:100%}
+a{color:#9db9ff}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filters button{font-size:12px}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.weekday{text-align:center;font-size:12px;color:#a9b7cb;padding:8px 0}
+.day{min-height:75px;padding:7px 3px;background:#202e47;border:1px solid #354761;border-radius:9px;text-align:center}
+.day.selected{border:2px solid #88a5ff;background:#2b3f68}
+.day.today{color:#a9bfff}
+.day.empty{background:transparent;border:0}
+.number{font-weight:700;font-size:14px}
+.dots{display:flex;justify-content:center;gap:3px;margin-top:9px;flex-wrap:wrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#60a5fa}
+.dot.medium{background:#fbbf24}
+.dot.high{background:#4ade80}
+.event{border-top:1px solid #34445e;padding:14px 0}
+.event:first-child{border:0}
+.tag{display:inline-block;padding:4px 8px;border-radius:20px;background:#354761;font-size:11px;margin:4px 4px 4px 0}
+.muted{color:#a9b7cb;font-size:13px}
+.empty-message{text-align:center;padding:20px;color:#a9b7cb}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#22324e;border-radius:10px;padding:12px 5px;text-align:center}
+.stat strong{display:block;font-size:22px}
+.stat span{font-size:11px;color:#b4c3d7}
+</style>
+</head>
+<body>
+<main>
+<header>
+<small>奈良県・大阪府 全域対応</small>
+<h1>スロナビ関西</h1>
+<p>イベントカレンダー｜公開情報を表示</p>
+</header>
+
+<section class="panel">
+<h2>イベント検索</h2>
+<div class="filters" id="prefFilters">
+<button data-pref="" class="active">奈良・大阪すべて</button>
+<button data-pref="奈良県">奈良県</button>
+<button data-pref="大阪府">大阪府</button>
+</div>
+<p><input id="search" placeholder="店舗名・市区町村で検索"></p>
+<div class="filters">
+<button id="favOnly">お気に入りのみ：OFF</button>
+</div>
+</section>
+
+<section class="panel">
+<div class="row">
+<button id="prev">◀</button>
+<h2 id="monthTitle"></h2>
+<button id="next">▶</button>
+</div>
+<div class="calendar" id="calendar"></div>
+<p class="muted">● イベント登録あり</p>
+<button id="todayBtn">今日に戻る</button>
+</section>
+
+<section class="panel">
+<h2 id="selectedTitle">選択日のイベント</h2>
+<div id="events"></div>
+</section>
+
+<section class="panel">
+<h2>今月のイベント集計</h2>
+<div class="stats">
+<div class="stat"><strong id="eventCount">0</strong><span>イベント件数</span></div>
+<div class="stat"><strong id="shopCount">0</strong><span>掲載店舗数</span></div>
+<div class="stat"><strong id="sourceCount">0</strong><span>情報元数</span></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>情報の更新状況</h2>
+<p id="status">データを確認しています...</p>
+<small>掲載情報は開催や設定投入、勝利を保証しません。公式情報で最終確認してください。</small>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const dateStr=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parseDate=s=>new Date(s+"T12:00:00");
+
+let now=new Date();
+let month=new Date(now.getFullYear(),now.getMonth(),1);
+let selected=dateStr(now);
+let pref="";
+let favOnly=false;
+let events=[];
+let favorites=JSON.parse(localStorage.getItem("slot-calendar-favorites")||"[]");
+
+function filtered(){
+ const q=$("search").value.trim().toLowerCase();
+ return events.filter(e=>
+  (!pref||e.pref===pref)&&
+  (!q||(e.shop+" "+(e.city||"")).toLowerCase().includes(q))&&
+  (!favOnly||favorites.includes(e.shop))
+ );
+}
+
+function render(){
+ const list=filtered();
+ const y=month.getFullYear(),m=month.getMonth();
+ $("monthTitle").textContent=y+"年"+(m+1)+"月";
+ $("selectedTitle").textContent=selected+" のイベント";
+
+ const cal=$("calendar");
+ cal.replaceChildren();
+ ["日","月","火","水","木","金","土"].forEach(w=>{
+  const el=document.createElement("div");
+  el.className="weekday";
+  el.textContent=w;
+  cal.append(el);
+ });
+
+ const first=new Date(y,m,1).getDay();
+ const count=new Date(y,m+1,0).getDate();
+
+ for(let i=0;i<first;i++){
+  const el=document.createElement("div");
+  el.className="day empty";
+  cal.append(el);
+ }
+
+ for(let d=1;d<=count;d++){
+  const ds=y+"-"+pad(m+1)+"-"+pad(d);
+  const dayEvents=list.filter(e=>e.date===ds);
+  const el=document.createElement("button");
+  el.className="day"+(ds===selected?" selected":"")+(ds===dateStr(new Date())?" today":"");
+  el.type="button";
+
+  const num=document.createElement("div");
+  num.className="number";
+  num.textContent=d;
+  el.append(num);
+
+  if(dayEvents.length){
+   const dots=document.createElement("div");
+   dots.className="dots";
+   dayEvents.slice(0,5).forEach(()=>{
+    const dot=document.createElement("span");
+    dot.className="dot";
+    dots.append(dot);
+   });
+   el.append(dots);
+  }
+
+  el.onclick=()=>{selected=ds;render()};
+  cal.append(el);
+ }
+
+ const daily=list.filter(e=>e.date===selected);
+ $("events").replaceChildren();
+
+ if(!daily.length){
+  const empty=document.createElement("div");
+  empty.className="empty-message";
+  empty.textContent="この日の掲載イベントはありません。";
+  $("events").append(empty);
+ }
+
+ daily.forEach(e=>{
+  const div=document.createElement("div");
+  div.className="event";
+
+  const row=document.createElement("div");
+  row.className="row";
+  const name=document.createElement("strong");
+  name.textContent=e.shop;
+  row.append(name);
+
+  const fav=document.createElement("button");
+  fav.textContent=favorites.includes(e.shop)?"★":"☆";
+  fav.onclick=()=>{
+   favorites=favorites.includes(e.shop)?
+    favorites.filter(x=>x!==e.shop):
+    [...favorites,e.shop];
+   localStorage.setItem("slot-calendar-favorites",JSON.stringify(favorites));
+   render();
+  };
+  row.append(fav);
+  div.append(row);
+
+  const info=document.createElement("p");
+  info.textContent=[e.pref,e.city,e.detail].filter(Boolean).join(" ・ ");
+  div.append(info);
+
+  [e.type,e.confidence].filter(Boolean).forEach(t=>{
+   const tag=document.createElement("span");
+   tag.className="tag";
+   tag.textContent=t;
+   div.append(tag);
+  });
+
+  if(/^https:\/\//.test(e.source||"")){
+   const p=document.createElement("p");
+   const a=document.createElement("a");
+   a.href=e.source;
+   a.textContent="情報元を確認 ↗";
+   a.target="_blank";
+   a.rel="noopener noreferrer";
+   p.append(a);
+   div.append(p);
+  }
+  $("events").append(div);
+ });
+
+ const monthPrefix=y+"-"+pad(m+1)+"-";
+ const monthly=list.filter(e=>e.date.startsWith(monthPrefix));
+ $("eventCount").textContent=monthly.length;
+ $("shopCount").textContent=new Set(monthly.map(e=>e.shop)).size;
+ $("sourceCount").textContent=new Set(monthly.map(e=>e.source).filter(Boolean)).size;
+}
+
+$("prev").onclick=()=>{
+ month=new Date(month.getFullYear(),month.getMonth()-1,1);
+ selected=dateStr(month);
+ render();
+};
+$("next").onclick=()=>{
+ month=new Date(month.getFullYear(),month.getMonth()+1,1);
+ selected=dateStr(month);
+ render();
+};
+$("todayBtn").onclick=()=>{
+ const d=new Date();
+ month=new Date(d.getFullYear(),d.getMonth(),1);
+ selected=dateStr(d);
+ render();
+};
+$("search").oninput=render;
+$("favOnly").onclick=()=>{
+ favOnly=!favOnly;
+ $("favOnly").textContent="お気に入りのみ："+(favOnly?"ON":"OFF");
+ $("favOnly").classList.toggle("active",favOnly);
+ render();
+};
+document.querySelectorAll("[data-pref]").forEach(b=>{
+ b.onclick=()=>{
+  pref=b.dataset.pref;
+  document.querySelectorAll("[data-pref]").forEach(x=>x.classList.toggle("active",x===b));
+  render();
+ };
+});
+
+async function loadEvents(){
+ try{
+  const response=await fetch("./events.json?t="+Date.now(),{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();
+  events=(Array.isArray(data.events)?data.events:[])
+   .filter(e=>
+    /^\d{4}-\d{2}-\d{2}$/.test(e.date||"")&&
+    e.shop&&["奈良県","大阪府"].includes(e.pref)&&
+    /^https:\/\//.test(e.source||"")
+   );
+  $("status").textContent=
+   "掲載："+events.length+"件 / 最終更新："+(data.updated_at||"不明");
+ }catch(err){
+  $("status").textContent="イベントデータ未取得。events.json と自動取得設定を確認してください。";
+  console.error(err);
+ }
+ render();
+}
+render();
+loadEvents();
+</script>
+</body>
+</html>
