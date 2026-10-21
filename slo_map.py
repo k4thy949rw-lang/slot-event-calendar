@@ -1,6 +1,6 @@
 
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
@@ -23,9 +23,37 @@ DATE_PATTERN = re.compile(
     r"(今日|明日)\s*(\d{1,2})/(\d{1,2})"
 )
 
+MEDIA_PATTERN = re.compile(
+    r"\s*[（(][^（）()]{1,80}[）)]\s*$"
+)
+
 
 def clean(value):
     return " ".join(str(value or "").split())
+
+
+def resolve_date(month, day):
+    today = datetime.now(JST).date()
+    candidates = []
+
+    for year in (
+        today.year - 1,
+        today.year,
+        today.year + 1
+    ):
+        try:
+            candidate = date(year, month, day)
+            candidates.append(candidate)
+        except ValueError:
+            continue
+
+    if not candidates:
+        return None
+
+    return min(
+        candidates,
+        key=lambda d: abs((d - today).days)
+    )
 
 
 def event_type(detail):
@@ -38,6 +66,98 @@ def event_type(detail):
     if "来店" in detail:
         return "来店"
     return "その他"
+
+
+def split_event(anchor):
+    # リンク内の表示文字列を取得
+    label = clean(
+        anchor.get_text(" ", strip=True)
+    )
+
+    label = re.sub(r"\s*→\s*$", "", label)
+    label = clean(label)
+
+    if not label:
+        return None
+
+    # 媒体名はイベント内容に残す
+    media = ""
+    match = MEDIA_PATTERN.search(label)
+
+    if match:
+        media = clean(match.group())
+        label = clean(label[:match.start()])
+
+    if not label:
+        return None
+
+    # 店舗名とイベント内容が別要素の場合
+    pieces = [
+        clean(s)
+        for s in anchor.stripped_strings
+        if clean(s) and clean(s) != "→"
+    ]
+
+    shop = ""
+    detail = ""
+
+    if len(pieces) >= 2:
+        first = pieces[0]
+
+        # 最初の要素が店舗名だけの場合
+        if (
+            first in label
+            and label.startswith(first + " ")
+            and not any(
+                word in first
+                for word in ("取材", "来店", "景品")
+            )
+        ):
+            shop = first
+            detail = clean(label[len(first):])
+
+    # 一つの文字列にまとまっている場合
+    if not shop:
+        # イベント名の前の空白で分割
+        tokens = label.split(" ")
+
+        if len(tokens) >= 2:
+            # 店舗名に空白があるケースも考慮
+            # 「店」「ホール」「館」などを目印にする
+            boundary = None
+
+            for i, token in enumerate(tokens[:-1]):
+                if (
+                    token.endswith("店")
+                    or token.endswith("ホール")
+                    or token.endswith("館")
+                    or token.endswith("センター")
+                ):
+                    boundary = i + 1
+
+            if boundary is None:
+                boundary = 1
+
+            shop = clean(
+                " ".join(tokens[:boundary])
+            )
+            detail = clean(
+                " ".join(tokens[boundary:])
+            )
+
+    if media:
+        detail = clean(detail + " " + media)
+
+    if not shop or not detail:
+        return None
+
+    if shop == detail:
+        return None
+
+    if len(shop) > 100 or len(detail) > 250:
+        return None
+
+    return shop, detail
 
 
 def scrape_slo_map(pref, url):
@@ -57,47 +177,56 @@ def scrape_slo_map(pref, url):
     events = []
     seen = set()
 
-    # 今日・明日の日付見出しを取得
+    headings = 0
+    links = 0
+
     for heading in soup.find_all("h3"):
-        heading_text = clean(
+        text = clean(
             heading.get_text(" ", strip=True)
         )
 
-        match = DATE_PATTERN.search(heading_text)
+        match = DATE_PATTERN.search(text)
 
         if not match:
             continue
 
-        day_label, month, day = match.groups()
+        _, month, day = match.groups()
 
-        target_date = today + timedelta(
-            days=0 if day_label == "今日" else 1
+        target_date = resolve_date(
+            int(month),
+            int(day)
         )
 
-        # 日付が一致しない情報は登録しない
-        if (
-            target_date.month != int(month)
-            or target_date.day != int(day)
-        ):
+        if target_date is None:
             continue
 
-        # 見出しを含む日付枠全体
+        days_ahead = (target_date - today).days
+
+        # サイトの日付切り替えが遅れた場合にも対応
+        # 昨日から2日後までに限定
+        if not -1 <= days_ahead <= 2:
+            continue
+
         card = heading.parent
 
         if card is None:
             continue
 
-        # 日付枠内の取材・来店セクションを探す
-        for subheading in card.find_all("h4"):
-            title = clean(
-                subheading.get_text(" ", strip=True)
+        # 過去の実績やランキングは対象外
+        sections = [
+            h.parent
+            for h in card.find_all("h4")
+            if "取材・来店" in clean(
+                h.get_text(" ", strip=True)
             )
+        ]
 
-            if "取材・来店" not in title:
-                continue
+        if not sections:
+            continue
 
-            section = subheading.parent
+        headings += 1
 
+        for section in sections:
             if section is None:
                 continue
 
@@ -112,30 +241,14 @@ def scrape_slo_map(pref, url):
                 if "/halls/" not in href:
                     continue
 
-                # リンクのテキストを分割
-                pieces = [
-                    clean(text)
-                    for text in anchor.stripped_strings
-                    if clean(text) != "→"
-                ]
+                links += 1
 
-                if len(pieces) < 2:
+                parsed = split_event(anchor)
+
+                if parsed is None:
                     continue
 
-                shop = pieces[0]
-                detail = clean(
-                    " ".join(pieces[1:])
-                )
-
-                # 異常な文字列は除外
-                if not shop or not detail:
-                    continue
-
-                if len(shop) > 100:
-                    continue
-
-                if len(detail) > 250:
-                    continue
+                shop, detail = parsed
 
                 key = (
                     target_date.isoformat(),
@@ -161,7 +274,10 @@ def scrape_slo_map(pref, url):
                 })
 
     print(
-        f"スロマップ/{pref}: {len(events)}件抽出",
+        f"スロマップ/{pref}: "
+        f"日付枠={headings}, "
+        f"リンク={links}, "
+        f"抽出={len(events)}件",
         flush=True
     )
 
