@@ -2,156 +2,321 @@
 import json
 import re
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 JST = ZoneInfo("Asia/Tokyo")
 OUTPUT = Path("events.json")
+NOW = datetime.now(JST)
 
-SOURCES = {
+PWORLD = {
     "奈良県": "https://www.p-world.co.jp/hall/interviews/prefs/nara",
     "大阪府": "https://www.p-world.co.jp/hall/interviews/prefs/osaka",
 }
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; EventCalendar/1.0)"
+SLOPACHI = {
+    "奈良県": "https://777.slopachi-station.com/report_schedule_pref/nara/",
+    "大阪府": "https://777.slopachi-station.com/report_schedule_pref/osaka/",
 }
 
-DATE_PATTERN = re.compile(
-    r"(20\d{2})/(\d{1,2})/(\d{1,2})"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; SlotCalendar/1.1)"
+}
+
+DATE_FULL = re.compile(
+    r"(20\d{2})[/-](\d{1,2})[/-](\d{1,2})"
 )
 
-ADDRESS_PATTERN = re.compile(
-    r"(奈良県|大阪府)([^\s]+)"
+DATE_SHORT = re.compile(
+    r"(?<!\d)(\d{1,2})/(\d{1,2})(?!\d)"
+)
+
+LOCATION = re.compile(
+    r"【(奈良県|大阪府)([^】]*)】|"
+    r"〖(奈良県|大阪府)([^〗]*)〗"
 )
 
 
-def clean(value):
-    return re.sub(r"\s+", " ", value or "").strip()
+def clean(text):
+    return re.sub(r"\s+", " ", str(text or "")).strip()
 
 
-def event_type(text):
-    if text.startswith("来店"):
-        return "来店"
-    if text.startswith("取材"):
-        return "取材"
-    return "その他"
-
-
-def parse_page(pref, url):
+def get_html(url):
     response = requests.get(
         url,
         headers=HEADERS,
         timeout=30
     )
     response.raise_for_status()
+    return BeautifulSoup(
+        response.content,
+        "html.parser"
+    )
 
-    soup = BeautifulSoup(response.text, "html.parser")
 
-    # 日付見出し(h2)と店舗見出し(h3)を
-    # 文書の出現順に処理する
-    headings = soup.find_all(["h2", "h3"])
+def resolve_date(month, day):
+    candidates = []
 
+    for year in (NOW.year - 1, NOW.year, NOW.year + 1):
+        try:
+            date = datetime(year, month, day, tzinfo=JST)
+        except ValueError:
+            continue
+
+        distance = abs((date - NOW).days)
+        candidates.append((distance, date))
+
+    if not candidates:
+        return None
+
+    return min(candidates, key=lambda x: x[0])[1].strftime(
+        "%Y-%m-%d"
+    )
+
+
+def get_type(detail):
+    if "周年" in detail:
+        return "周年"
+    if "景品" in detail:
+        return "景品入荷"
+    if "取材" in detail:
+        return "取材"
+    if "来店" in detail:
+        return "来店"
+    return "その他"
+
+
+def make_event(date, pref, shop, detail, source, city=""):
+    if not date or not shop or not detail:
+        return None
+
+    if not source.startswith("https://"):
+        return None
+
+    return {
+        "date": date,
+        "pref": pref,
+        "shop": clean(shop),
+        "city": clean(city),
+        "type": get_type(detail),
+        "detail": clean(detail)[:250],
+        "source": source,
+        "confidence": "公開掲載情報"
+    }
+
+
+def scrape_pworld(pref, url):
+    soup = get_html(url)
     events = []
     current_date = None
 
-    for heading in headings:
+    for heading in soup.find_all(["h2", "h3"]):
         title = clean(heading.get_text(" ", strip=True))
 
         if heading.name == "h2":
-            match = DATE_PATTERN.search(title)
+            match = DATE_FULL.search(title)
 
             if match and "取材・来店情報" in title:
-                year, month, day = map(
-                    int, match.groups()
-                )
+                y, m, d = map(int, match.groups())
+
                 try:
                     current_date = datetime(
-                        year, month, day
+                        y, m, d
                     ).strftime("%Y-%m-%d")
                 except ValueError:
                     current_date = None
 
             continue
 
-        if heading.name != "h3" or not current_date:
+        if not current_date or not title:
             continue
 
-        shop = title
+        lines = []
+        source = url
+        city = ""
+
+        for element in heading.next_elements:
+            if isinstance(element, Tag):
+                if element.name in ("h2", "h3"):
+                    break
+
+                if element.name == "a":
+                    href = element.get("href", "")
+                    if href:
+                        link = urljoin(url, href)
+                        if link.startswith("https://"):
+                            source = link
+
+            elif isinstance(element, str):
+                value = clean(element)
+                if value:
+                    lines.append(value)
+
+        for line in lines:
+            if line.startswith(pref):
+                city = line
+                break
+
+        details = []
+
+        for i, line in enumerate(lines):
+            if line in ("来店", "取材"):
+                detail = clean(
+                    " ".join(lines[i:i + 7])
+                )
+                if len(detail) >= 5:
+                    details.append(detail)
+
+        if not details:
+            for line in lines:
+                if re.match(r"^(来店|取材)\s*.+", line):
+                    details.append(line)
+
+        for detail in details:
+            event = make_event(
+                current_date,
+                pref,
+                title,
+                detail,
+                source,
+                city
+            )
+            if event:
+                events.append(event)
+
+    return events
+
+
+def find_schedule_blocks(soup, pref):
+    """
+    日付と都道府県を含む小さな掲載ブロックを探す。
+    大きな一覧コンテナは対象にしない。
+    """
+    blocks = []
+    seen = set()
+
+    for node in soup.find_all(string=True):
+        text = clean(node)
+
+        if not DATE_SHORT.search(text):
+            continue
+
+        element = node.parent
+
+        for _ in range(6):
+            if not isinstance(element, Tag):
+                break
+
+            body = clean(
+                element.get_text(" ", strip=True)
+            )
+
+            if (
+                pref in body
+                and LOCATION.search(body)
+                and DATE_SHORT.search(body)
+                and 15 <= len(body) <= 350
+            ):
+                if id(element) not in seen:
+                    blocks.append(element)
+                    seen.add(id(element))
+                break
+
+            element = element.parent
+
+    return blocks
+
+
+def scrape_slopachi(pref, url):
+    soup = get_html(url)
+    events = []
+
+    blocks = find_schedule_blocks(soup, pref)
+
+    for block in blocks:
+        text = clean(
+            block.get_text(" ", strip=True)
+        )
+
+        date_match = DATE_SHORT.search(text)
+        loc_match = LOCATION.search(text)
+
+        if not date_match or not loc_match:
+            continue
+
+        location_pref = (
+            loc_match.group(1)
+            or loc_match.group(3)
+        )
+
+        if location_pref != pref:
+            continue
+
+        month, day = map(
+            int, date_match.groups()
+        )
+
+        date = resolve_date(month, day)
+
+        city = (
+            loc_match.group(2)
+            or loc_match.group(4)
+            or ""
+        )
+
+        # 所在地表記以降が取材名・店舗名
+        remaining = clean(
+            text[loc_match.end():]
+        )
+
+        if not remaining:
+            continue
+
+        # 店舗リンクがあれば、リンク文字列を優先
+        anchors = [
+            clean(a.get_text(" ", strip=True))
+            for a in block.find_all("a", href=True)
+        ]
+        anchors = [
+            a for a in anchors
+            if a and len(a) <= 80
+        ]
+
+        shop = anchors[-1] if anchors else ""
+
+        # リンクで店舗名が判別できない場合、
+        # 不確かなデータは登録しない
         if not shop:
             continue
 
-        # 店舗見出しの次から、次の店舗または
-        # 日付見出しまでの情報を集める
-        texts = []
-        source = url
-        address = ""
+        if shop == remaining:
+            continue
 
-        for element in heading.next_elements:
-            if element is heading:
-                continue
+        if shop in remaining:
+            detail = clean(
+                remaining.split(shop)[0]
+            )
+        else:
+            continue
 
-            if getattr(element, "name", None) in ("h2", "h3"):
-                break
+        if not detail or len(detail) > 120:
+            continue
 
-            if getattr(element, "name", None) == "a":
-                href = element.get("href", "")
-                if "p-world.jp" in href and source == url:
-                    source = urljoin(url, href)
+        event = make_event(
+            date,
+            pref,
+            shop,
+            detail,
+            url,
+            pref + city
+        )
 
-            if isinstance(element, str):
-                value = clean(element)
-                if value:
-                    texts.append(value)
-
-        # 同じ文字列の重複を抑える
-        lines = []
-        for value in texts:
-            if not lines or lines[-1] != value:
-                lines.append(value)
-
-        for value in lines:
-            if value.startswith(pref):
-                address = value
-                break
-
-        # 「来店」「取材」で始まる掲載内容を抽出
-        details = []
-
-        for index, value in enumerate(lines):
-            if value not in ("来店", "取材"):
-                continue
-
-            following = lines[index + 1:index + 7]
-            detail = clean(" ".join([value] + following))
-
-            # イベント内容が存在する場合だけ採用
-            if len(detail) < 5:
-                continue
-
-            details.append(detail)
-
-        # タグの分かれ方が異なる場合への対応
-        if not details:
-            for value in lines:
-                if re.match(r"^(来店|取材)\s*.+", value):
-                    details.append(value)
-
-        for detail in details:
-            events.append({
-                "date": current_date,
-                "pref": pref,
-                "shop": shop,
-                "city": address,
-                "type": event_type(detail),
-                "detail": detail[:250],
-                "source": source if source.startswith("https://") else url,
-                "confidence": "掲載情報"
-            })
+        if event:
+            events.append(event)
 
     return events
 
@@ -169,61 +334,107 @@ def load_previous():
         return []
 
 
-def main():
-    now = datetime.now(JST)
-    old_events = load_previous()
+def event_key(event):
+    return (
+        event.get("date", ""),
+        event.get("pref", ""),
+        re.sub(
+            r"\s+",
+            "",
+            event.get("shop", "")
+        ).lower(),
+        re.sub(
+            r"\s+",
+            "",
+            event.get("detail", "")
+        ).lower()
+    )
 
+
+def main():
+    previous = load_previous()
     events = []
     successful = []
     errors = []
 
-    for pref, url in SOURCES.items():
-        try:
-            found = parse_page(pref, url)
+    sources = [
+        ("P-WORLD", PWORLD, scrape_pworld),
+        ("スロパチステーション", SLOPACHI, scrape_slopachi),
+    ]
 
-            if not found:
-                raise ValueError(
-                    "掲載情報を抽出できませんでした"
+    for name, urls, scraper in sources:
+        for pref, url in urls.items():
+            source_name = f"{name}/{pref}"
+
+            try:
+                found = scraper(pref, url)
+
+                if not found:
+                    raise ValueError(
+                        "掲載情報を抽出できませんでした"
+                    )
+
+                events.extend(found)
+                successful.append(source_name)
+
+                print(
+                    f"{source_name}: {len(found)}件"
                 )
 
-            events.extend(found)
-            successful.append(pref)
-            print(f"{pref}: {len(found)}件")
+            except Exception as exc:
+                errors.append(
+                    f"{source_name}: {exc}"
+                )
+                print(
+                    f"{source_name}: 取得失敗: {exc}"
+                )
 
-        except Exception as exc:
-            errors.append(f"{pref}: {exc}")
-            print(f"{pref} 取得失敗: {exc}")
+    # 既存データは保持し、新規データと統合
+    # 過去90日から未来180日の範囲だけ保存
+    min_date = (
+        NOW - timedelta(days=90)
+    ).strftime("%Y-%m-%d")
 
-    # 取得失敗した地域は前回のデータを保持
-    for item in old_events:
-        if item.get("pref") not in successful:
-            events.append(item)
+    max_date = (
+        NOW + timedelta(days=180)
+    ).strftime("%Y-%m-%d")
 
-    unique = {}
-    for item in events:
-        key = (
-            item.get("date"),
-            item.get("pref"),
-            item.get("shop"),
-            item.get("detail")
-        )
-        unique[key] = item
+    merged = {}
 
-    events = sorted(
-        unique.values(),
-        key=lambda x: (
-            x.get("date", ""),
-            x.get("pref", ""),
-            x.get("shop", "")
+    for item in previous + events:
+        date = item.get("date", "")
+
+        if not (min_date <= date <= max_date):
+            continue
+
+        if item.get("pref") not in (
+            "奈良県", "大阪府"
+        ):
+            continue
+
+        if not item.get("shop") or not item.get("source"):
+            continue
+
+        merged[event_key(item)] = item
+
+    result = sorted(
+        merged.values(),
+        key=lambda e: (
+            e.get("date", ""),
+            e.get("pref", ""),
+            e.get("shop", "")
         )
     )
 
     output = {
-        "updated_at": now.isoformat(timespec="seconds"),
-        "events": events,
+        "updated_at": NOW.isoformat(
+            timespec="seconds"
+        ),
+        "events": result,
         "fetch_status": {
             "successful": successful,
-            "errors": errors
+            "errors": errors,
+            "total": len(result)
         }
     }
 
@@ -236,7 +447,9 @@ def main():
         encoding="utf-8"
     )
 
-    print(f"合計: {len(events)}件")
+    print(f"保存完了: {len(result)}件")
+    print(f"取得成功: {len(successful)}地域・サイト")
+    print(f"取得エラー: {len(errors)}件")
 
 
 if __name__ == "__main__":
