@@ -1,7 +1,6 @@
 
 import json
 import re
-import hashlib
 from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -19,191 +18,203 @@ SOURCES = {
 }
 
 HEADERS = {
-    "User-Agent": "SlotEventCalendar/1.0 (personal event calendar)"
+    "User-Agent": "Mozilla/5.0 (compatible; EventCalendar/1.0)"
 }
 
-DATE_RE = re.compile(
-    r"(?:(20\d{2})[/-])?(\d{1,2})[/-](\d{1,2})"
+DATE_PATTERN = re.compile(
+    r"(20\d{2})/(\d{1,2})/(\d{1,2})"
 )
 
-EVENT_WORDS = (
-    "来店", "取材", "周年", "リニューアル"
+ADDRESS_PATTERN = re.compile(
+    r"(奈良県|大阪府)([^\s]+)"
 )
+
 
 def clean(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
+
 def event_type(text):
-    if "周年" in text:
-        return "周年"
-    if "リニューアル" in text:
-        return "リニューアル"
-    if "取材" in text:
-        return "取材"
-    if "来店" in text:
+    if text.startswith("来店"):
         return "来店"
+    if text.startswith("取材"):
+        return "取材"
     return "その他"
 
-def extract_date(text, year):
-    match = DATE_RE.search(text)
-    if not match:
-        return None
 
-    y = int(match.group(1) or year)
-    m = int(match.group(2))
-    d = int(match.group(3))
-
-    try:
-        return datetime(y, m, d).strftime("%Y-%m-%d")
-    except ValueError:
-        return None
-
-def load_previous():
-    if not OUTPUT.exists():
-        return {"events": []}
-
-    try:
-        data = json.loads(OUTPUT.read_text(encoding="utf-8"))
-        if isinstance(data, dict):
-            return data
-    except (OSError, ValueError):
-        pass
-
-    return {"events": []}
-
-def scrape_prefecture(pref, url):
+def parse_page(pref, url):
     response = requests.get(
         url,
         headers=HEADERS,
-        timeout=25
+        timeout=30
     )
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    for element in soup([
-        "script", "style", "nav", "footer"
-    ]):
-        element.decompose()
+    # 日付見出し(h2)と店舗見出し(h3)を
+    # 文書の出現順に処理する
+    headings = soup.find_all(["h2", "h3"])
 
-    current_year = datetime.now(JST).year
-    records = []
+    events = []
     current_date = None
 
-    # 見出しから日付を取得する
-    # 店舗名・イベント名は同じ掲載ブロックから抽出
-    for element in soup.find_all(
-        ["h2", "h3", "h4", "article"]
-    ):
-        text = clean(element.get_text(" ", strip=True))
+    for heading in headings:
+        title = clean(heading.get_text(" ", strip=True))
 
-        if not text:
+        if heading.name == "h2":
+            match = DATE_PATTERN.search(title)
+
+            if match and "取材・来店情報" in title:
+                year, month, day = map(
+                    int, match.groups()
+                )
+                try:
+                    current_date = datetime(
+                        year, month, day
+                    ).strftime("%Y-%m-%d")
+                except ValueError:
+                    current_date = None
+
             continue
 
-        date = extract_date(text, current_year)
-
-        if date and len(text) < 150:
-            current_date = date
-
-        # 日付を含むイベントブロックのみ対象
-        if element.name != "article":
+        if heading.name != "h3" or not current_date:
             continue
 
-        if not any(word in text for word in EVENT_WORDS):
+        shop = title
+        if not shop:
             continue
 
-        date = date or current_date
-        if not date:
-            continue
+        # 店舗見出しの次から、次の店舗または
+        # 日付見出しまでの情報を集める
+        texts = []
+        source = url
+        address = ""
 
-        heading = element.find(["h2", "h3", "h4"])
-        if not heading:
-            continue
+        for element in heading.next_elements:
+            if element is heading:
+                continue
 
-        shop = clean(heading.get_text(" ", strip=True))
+            if getattr(element, "name", None) in ("h2", "h3"):
+                break
 
-        if not shop or len(shop) > 80:
-            continue
+            if getattr(element, "name", None) == "a":
+                href = element.get("href", "")
+                if "p-world.jp" in href and source == url:
+                    source = urljoin(url, href)
 
-        link = element.find("a", href=True)
-        source = (
-            urljoin(url, link["href"])
-            if link else url
+            if isinstance(element, str):
+                value = clean(element)
+                if value:
+                    texts.append(value)
+
+        # 同じ文字列の重複を抑える
+        lines = []
+        for value in texts:
+            if not lines or lines[-1] != value:
+                lines.append(value)
+
+        for value in lines:
+            if value.startswith(pref):
+                address = value
+                break
+
+        # 「来店」「取材」で始まる掲載内容を抽出
+        details = []
+
+        for index, value in enumerate(lines):
+            if value not in ("来店", "取材"):
+                continue
+
+            following = lines[index + 1:index + 7]
+            detail = clean(" ".join([value] + following))
+
+            # イベント内容が存在する場合だけ採用
+            if len(detail) < 5:
+                continue
+
+            details.append(detail)
+
+        # タグの分かれ方が異なる場合への対応
+        if not details:
+            for value in lines:
+                if re.match(r"^(来店|取材)\s*.+", value):
+                    details.append(value)
+
+        for detail in details:
+            events.append({
+                "date": current_date,
+                "pref": pref,
+                "shop": shop,
+                "city": address,
+                "type": event_type(detail),
+                "detail": detail[:250],
+                "source": source if source.startswith("https://") else url,
+                "confidence": "掲載情報"
+            })
+
+    return events
+
+
+def load_previous():
+    if not OUTPUT.exists():
+        return []
+
+    try:
+        data = json.loads(
+            OUTPUT.read_text(encoding="utf-8")
         )
+        return data.get("events", [])
+    except (OSError, ValueError, TypeError):
+        return []
 
-        if not source.startswith("https://"):
-            source = url
-
-        detail = text[:250]
-
-        records.append({
-            "date": date,
-            "pref": pref,
-            "shop": shop,
-            "city": "",
-            "type": event_type(detail),
-            "detail": detail,
-            "source": source,
-            "confidence": "第三者掲載"
-        })
-
-    return records
 
 def main():
     now = datetime.now(JST)
-    previous = load_previous()
-    collected = []
-    errors = []
+    old_events = load_previous()
+
+    events = []
     successful = []
+    errors = []
 
     for pref, url in SOURCES.items():
         try:
-            records = scrape_prefecture(pref, url)
-            if not records:
+            found = parse_page(pref, url)
+
+            if not found:
                 raise ValueError(
-                    "イベントの構造を認識できませんでした"
+                    "掲載情報を抽出できませんでした"
                 )
 
-            collected.extend(records)
+            events.extend(found)
             successful.append(pref)
+            print(f"{pref}: {len(found)}件")
 
-            print(
-                f"{pref}: {len(records)}件取得"
-            )
+        except Exception as exc:
+            errors.append(f"{pref}: {exc}")
+            print(f"{pref} 取得失敗: {exc}")
 
-        except Exception as error:
-            message = f"{pref}: {error}"
-            errors.append(message)
-            print("取得失敗:", message)
-
-    # 取得に失敗した地域の既存データは保持
-    for event in previous.get("events", []):
-        if event.get("pref") not in successful:
-            collected.append(event)
+    # 取得失敗した地域は前回のデータを保持
+    for item in old_events:
+        if item.get("pref") not in successful:
+            events.append(item)
 
     unique = {}
-
-    for event in collected:
-        key = hashlib.sha256(
-            json.dumps(
-                [
-                    event.get("date"),
-                    event.get("pref"),
-                    event.get("shop"),
-                    event.get("detail")
-                ],
-                ensure_ascii=False
-            ).encode("utf-8")
-        ).hexdigest()
-
-        unique[key] = event
+    for item in events:
+        key = (
+            item.get("date"),
+            item.get("pref"),
+            item.get("shop"),
+            item.get("detail")
+        )
+        unique[key] = item
 
     events = sorted(
         unique.values(),
-        key=lambda e: (
-            e.get("date", ""),
-            e.get("pref", ""),
-            e.get("shop", "")
+        key=lambda x: (
+            x.get("date", ""),
+            x.get("pref", ""),
+            x.get("shop", "")
         )
     )
 
@@ -225,10 +236,8 @@ def main():
         encoding="utf-8"
     )
 
-    print(f"保存完了: {len(events)}件")
+    print(f"合計: {len(events)}件")
 
-    if errors:
-        print("一部の取得元でエラーが発生しました")
 
 if __name__ == "__main__":
     main()
