@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+
 JST = ZoneInfo("Asia/Tokyo")
 
 SITES = {
@@ -14,117 +15,133 @@ SITES = {
     "大阪府": "https://slo-map.com/area/osaka",
 }
 
-DATE_PATTERN = re.compile(
-    r"(今日|明日)\s*(\d{1,2})/(\d{1,2})"
-)
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
+DATE_PATTERN = re.compile(
+    r"(今日|明日)\s*(\d{1,2})/(\d{1,2})"
+)
 
-def clean(text):
-    return " ".join(str(text or "").split())
+
+def clean(value):
+    return " ".join(str(value or "").split())
 
 
 def event_type(detail):
-    if "来店" in detail:
-        return "来店"
-    if "取材" in detail:
-        return "取材"
+    if "周年" in detail:
+        return "周年"
     if "景品" in detail:
         return "景品入荷"
+    if "取材" in detail:
+        return "取材"
+    if "来店" in detail:
+        return "来店"
     return "その他"
 
 
 def scrape_slo_map(pref, url):
     response = requests.get(
-        url, headers=HEADERS, timeout=30
+        url,
+        headers=HEADERS,
+        timeout=30
     )
     response.raise_for_status()
 
     soup = BeautifulSoup(
-        response.content, "html.parser"
+        response.content,
+        "html.parser"
     )
 
     today = datetime.now(JST).date()
     events = []
     seen = set()
 
-    # 日付ごとに分かれた「今日・明日」の枠だけを対象にする
+    # 今日・明日の日付見出しを取得
     for heading in soup.find_all("h3"):
-        label = clean(heading.get_text(" ", strip=True))
-        match = DATE_PATTERN.search(label)
+        heading_text = clean(
+            heading.get_text(" ", strip=True)
+        )
+
+        match = DATE_PATTERN.search(heading_text)
 
         if not match:
             continue
 
         day_label, month, day = match.groups()
 
-        expected = today + timedelta(
+        target_date = today + timedelta(
             days=0 if day_label == "今日" else 1
         )
 
-        # 表示日と実際の日付が一致しなければ登録しない
+        # 日付が一致しない情報は登録しない
         if (
-            expected.month != int(month)
-            or expected.day != int(day)
+            target_date.month != int(month)
+            or target_date.day != int(day)
         ):
             continue
 
+        # 見出しを含む日付枠全体
         card = heading.parent
 
         if card is None:
             continue
 
-        # 取材・来店欄のみを抽出
-        for section in card.find_all("div", recursive=False):
-            subheading = section.find("h4")
+        # 日付枠内の取材・来店セクションを探す
+        for subheading in card.find_all("h4"):
+            title = clean(
+                subheading.get_text(" ", strip=True)
+            )
 
-            if not subheading:
+            if "取材・来店" not in title:
                 continue
 
-            if "取材・来店" not in clean(
-                subheading.get_text(" ", strip=True)
-            ):
+            section = subheading.parent
+
+            if section is None:
                 continue
 
             for anchor in section.find_all(
                 "a", href=True
             ):
                 href = urljoin(
-                    response.url, anchor["href"]
+                    response.url,
+                    anchor["href"]
                 )
 
                 if "/halls/" not in href:
                     continue
 
-                # 店舗名とイベント名を分けるため、
-                # リンク内のテキスト要素を利用
+                # リンクのテキストを分割
                 pieces = [
-                    clean(s)
-                    for s in anchor.stripped_strings
-                    if clean(s) and clean(s) != "→"
+                    clean(text)
+                    for text in anchor.stripped_strings
+                    if clean(text) != "→"
                 ]
 
                 if len(pieces) < 2:
                     continue
 
                 shop = pieces[0]
-                detail = clean(" ".join(pieces[1:]))
+                detail = clean(
+                    " ".join(pieces[1:])
+                )
 
-                # 店舗名が長すぎる等、構造が変わった場合は除外
-                if (
-                    len(shop) > 100
-                    or len(detail) > 200
-                    or not detail
-                ):
+                # 異常な文字列は除外
+                if not shop or not detail:
                     continue
 
-                date = expected.isoformat()
+                if len(shop) > 100:
+                    continue
+
+                if len(detail) > 250:
+                    continue
 
                 key = (
-                    date, pref, shop, detail
+                    target_date.isoformat(),
+                    pref,
+                    shop,
+                    detail
                 )
 
                 if key in seen:
@@ -133,7 +150,7 @@ def scrape_slo_map(pref, url):
                 seen.add(key)
 
                 events.append({
-                    "date": date,
+                    "date": target_date.isoformat(),
                     "pref": pref,
                     "shop": shop,
                     "city": "",
@@ -142,5 +159,10 @@ def scrape_slo_map(pref, url):
                     "source": href,
                     "confidence": "公開掲載情報"
                 })
+
+    print(
+        f"スロマップ/{pref}: {len(events)}件抽出",
+        flush=True
+    )
 
     return events
