@@ -1,0 +1,104 @@
+
+========== ホルログ（奈良） ==========
+HTTP: 200
+
+【日付を含む表示テキスト：最大15件】
+'10/21（水）時点・今日4件／明日0件（7日先まで・毎日自動更新）'
+'10月21日（水）の奈良県パチンコ・スロットイベント'
+'10月22日（木）の奈良県パチンコ・スロットイベント'
+'10月23日（金）の奈良県パチンコ・スロットイベント'
+'10月24日（土）の奈良県パチンコ・スロットイベント'
+'10月25日（日）の奈良県パチンコ・スロットイベント'
+'10月26日（月）の奈良県パチンコ・スロットイベント'
+'10月27日（火）の奈良県パチンコ・スロットイベント'
+'10月28日（水）の奈良県パチンコ・スロットイベント'
+'10/21 取材'
+'10/21 取材'
+'10/21 来店'
+'10/24 取材'
+'10/25 取材'
+'10/25 来店'
+日付候補数: 15
+
+【イベント関連リンク：最大15件】
+表示: イベント日
+URL: https://horulog.com/event
+表示: 来店演者
+URL: https://horulog.com/enja
+表示: スロパチステーション来店取材(青)
+URL: https://horulog.com/enja/ef70482adec
+表示: 蒼りな来店
+URL: https://horulog.com/enja/ed7c686a38c
+表示: 髭原人来店
+URL: https://horulog.com/enja/e83c65557dd
+表示: やんばる☆めぐ来店
+URL: https://horulog.com/enja/e5f136cbbb3
+表示: アスカ来店
+URL: https://horulog.com/enja/e590f4753c1
+表示: 守山アニキ来店
+URL: https://horulog.com/enja/eb15a5fb2ea
+表示: 玉城マイ来店
+URL: https://horulog.com/enja/e418e4962c3
+表示: うらら来店
+URL: https://horulog.com/enja/e8558e3ea29
+表示: スロパチガール来店S
+URL: https://horulog.com/enja/e1b4a00548b
+表示: れいやーじゅ来店
+URL: https://horulog.com/enja/e0ad20e0e04
+表示: マルハン大安寺店 10/21 取材
+URL: https://horulog.com/hall/%E5%A5%88%E8%89%AF%E7%9C%8C/%E3%83%9E%E3%83%AB%E3%83%8F%E3%83%B3%E5%A4%A7%E5%AE%89%E5%AF%BA%E5%BA%97
+表示: マルハン橿原北店 10/21 取材
+URL: https://horulog.com/hall/%E5%A5%88%E8%89%AF%E7%9C%8C/%E3%83%9E%E3%83%AB%E3%83%8F%E3%83%B3%E6%A9%BF%E5%8E%9F%E5%8C%97%E5%BA%97
+表示: フェイス860橿原 10/21 来店
+URL: https://horulog.com/hall/%E5%A5%88%E8%89%AF%E7%9C%8C/%E3%83%95%E3%82%A7%E3%82%A4%E3%82%B9860%E6%A9%BF%E5%8E%9F
+リンク候補数: 15
+
+========== スロマップ（奈良） ==========
+HTTP: 200
+
+【日付を含む表示テキスト：最大15件】
+'今日 10/21(水)'
+'明日 10/22(木)'
+'✨ 4/16追加'
+'10/21'
+'10/20'
+'10/15'
+'10/21'
+'10/17'
+'10/16'
+'10/19'
+'10/17'
+'10/07'
+'10/18'
+'10/18'
+'10/18'
+日付候補数: 15
+
+【イベント関連リンク：最大15件】
+表示: 取材
+URL: https://slo-map.com/media
+表示: 全国の今日・明日のイベント一覧はこちら →
+URL: https://slo-map.com/events
+表示: マルハン橿原北店 超極誓取材 （DMMぱちタウン） →
+URL: https://slo-map.com/halls/6879
+表示: フェイス860橿原 蒼りな(あおりな)来店 （その他取材・企画） →
+URL: https://slo-map.com/halls/6875
+表示: SUPER COSMO 橿原店 モガミ全館取材『黒』 （リアルモガミ） →
+URL: https://slo-map.com/halls/6871
+表示: マルハン上牧店 徹底取材【赤】 （スロイズム＆パチイズム） →
+URL: https://slo-map.com/halls/6906
+表示: スーパードーム大和高田店 パチ嬢みき来店 （パチ嬢グループ） →
+URL: https://slo-map.com/halls/6854
+表示: 全国のイベントランキングを見る
+URL: https://slo-map.com/syuzai/ranking
+表示: 🗓️ 奈良 の月間取材カレンダーを見る → 1週間先まで無料。プレミアムなら最大2ヶ月先まで先読み
+URL: https://slo-map.com/schedule/nara
+表示: 3 ARROW 大和小泉店 奈良県大和郡山市小泉町1239−4 平均差枚: + 98 枚 勝率: 34 % 平均G数: 2159 G 📅 過去のイベント実績（強い実績） 10/19 新台入替 2159
+URL: https://slo-map.com/halls/6856
+表示: 4 Premium Five 奈良県生駒郡斑鳩町幸前1-13-29 平均差枚: + 63 枚 勝率: 35 % 平均G数: 2588 G 📅 過去のイベント実績（強い実績） 10/18 スロ6 258
+URL: https://slo-map.com/halls/6902
+表示: 🔍 新取材チェッカー
+URL: https://slo-map.com/syuzai/discover
+リンク候補数: 12
+
+=== 抽出テスト終了 ===
