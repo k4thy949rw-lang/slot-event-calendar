@@ -27,7 +27,7 @@ HORULOG = {
 }
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; SlotCalendar/1.2)"
+    "User-Agent": "Mozilla/5.0 (compatible; SlotCalendar/1.3)"
 }
 
 FULL_DATE = re.compile(
@@ -74,13 +74,20 @@ def resolve_date(month, day):
 
 
 def event_type(detail):
-    if "周年" in detail:
+    # 媒体名の「取材」に影響されないようにする
+    main_detail = re.sub(
+        r"\s*[（(][^（）()]{1,80}[）)]\s*$",
+        "",
+        clean(detail)
+    )
+
+    if "周年" in main_detail:
         return "周年"
-    if "景品" in detail:
+    if "景品" in main_detail:
         return "景品入荷"
-    if "取材" in detail:
+    if "取材" in main_detail:
         return "取材"
-    if "来店" in detail:
+    if "来店" in main_detail:
         return "来店"
     return "その他"
 
@@ -263,13 +270,79 @@ def event_key(event):
     )
 
 
+def normalize_events(items):
+    unique = {}
+
+    # 同じ日付・店舗・内容を統合
+    for original in items:
+        item = dict(original)
+
+        item["type"] = event_type(
+            item.get("detail", "")
+        )
+
+        key = event_key(item)
+
+        if key not in unique:
+            unique[key] = item
+        elif (
+            not unique[key].get("city")
+            and item.get("city")
+        ):
+            unique[key] = item
+
+    records = list(unique.values())
+
+    # 詳細情報のある日付・店舗・分類を記録
+    detailed_groups = set()
+
+    for item in records:
+        detail = clean(item.get("detail", ""))
+
+        if detail not in ("取材", "来店"):
+            detailed_groups.add((
+                item.get("date"),
+                item.get("pref"),
+                re.sub(
+                    r"\s+", "",
+                    item.get("shop", "")
+                ).lower(),
+                item.get("type")
+            ))
+
+    result = []
+
+    for item in records:
+        detail = clean(item.get("detail", ""))
+
+        group = (
+            item.get("date"),
+            item.get("pref"),
+            re.sub(
+                r"\s+", "",
+                item.get("shop", "")
+            ).lower(),
+            item.get("type")
+        )
+
+        # 詳細がある場合は簡易情報だけを省略
+        if (
+            detail in ("取材", "来店")
+            and group in detailed_groups
+        ):
+            continue
+
+        result.append(item)
+
+    return result
+
+
 def main():
     previous = load_previous()
     events = []
     successful = []
     errors = []
 
-    # 3サイト・奈良県と大阪府の計6系統
     sources = [
         ("P-WORLD", PWORLD, scrape_pworld),
         ("ホルログ", HORULOG, scrape_horulog),
@@ -316,7 +389,7 @@ def main():
 
     merged = {}
 
-    # 既存イベントを保持
+    # 既存イベントを維持
     for item in previous:
         date = item.get("date", "")
 
@@ -331,7 +404,7 @@ def main():
 
         merged[event_key(item)] = item
 
-    # 新規取得イベントを追加
+    # 今回取得したイベントを追加
     for item in events:
         date = item.get("date", "")
 
@@ -343,12 +416,14 @@ def main():
         if key not in merged:
             merged[key] = item
 
+    # 重複整理と分類修正
     result = sorted(
-        merged.values(),
+        normalize_events(merged.values()),
         key=lambda e: (
             e.get("date", ""),
             e.get("pref", ""),
-            e.get("shop", "")
+            e.get("shop", ""),
+            e.get("detail", "")
         )
     )
 
