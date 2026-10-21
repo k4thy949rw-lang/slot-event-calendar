@@ -1,5 +1,11 @@
-
 {
-  "updated_at": null,
-  "events": []
+  "updated_at": "2026-10-21T23:18:26+09:00",
+  "events": [],
+  "fetch_status": {
+    "successful": [],
+    "errors": [
+      "奈良県: イベントの構造を認識できませんでした",
+      "大阪府: イベントの構造を認識できませんでした"
+    ]
+  }
 }
