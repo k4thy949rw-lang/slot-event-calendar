@@ -1,0 +1,28 @@
+
+name: DMM接続テスト
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-dmm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonを準備
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 必要ライブラリをインストール
+        run: |
+          python -m pip install requests beautifulsoup4
+
+      - name: DMM接続テストを実行
+        run: python test_dmm.py
