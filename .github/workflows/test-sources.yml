@@ -3,6 +3,11 @@ name: 追加サイト接続テスト
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '15 22 * * *'
+
+permissions:
+  contents: write
 
 jobs:
   test-sources:
@@ -20,5 +25,15 @@ jobs:
       - name: 必要ライブラリをインストール
         run: pip install requests beautifulsoup4
 
-      - name: 追加サイトの接続テストを実行
-        run: python test_sources.py
+      - name: 抽出結果をファイルに保存
+        run: python test_sources.py > source_probe.txt 2>&1
+
+      - name: 結果をリポジトリに保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add source_probe.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Save event source diagnostics"
+            git push
+          fi
