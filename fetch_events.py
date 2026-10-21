@@ -9,6 +9,9 @@ from urllib.parse import urljoin, unquote
 import requests
 from bs4 import BeautifulSoup, Tag
 
+from slo_map import SITES as SLO_MAP, scrape_slo_map
+
+
 JST = ZoneInfo("Asia/Tokyo")
 NOW = datetime.now(JST)
 OUTPUT = Path("events.json")
@@ -29,10 +32,6 @@ HEADERS = {
 
 FULL_DATE = re.compile(
     r"(20\d{2})[/-](\d{1,2})[/-](\d{1,2})"
-)
-
-SHORT_DATE = re.compile(
-    r"(?<!\d)(\d{1,2})/(\d{1,2})(?!\d)"
 )
 
 HORULOG_ENTRY = re.compile(
@@ -194,8 +193,8 @@ def scrape_horulog(pref, url):
         if not href.startswith("https://horulog.com/hall/"):
             continue
 
-        # 他府県の店舗は登録しない
         decoded = unquote(href)
+
         if f"/hall/{pref}/" not in decoded:
             continue
 
@@ -211,23 +210,22 @@ def scrape_horulog(pref, url):
         category = match.group(4)
 
         date = resolve_date(month, day)
+
         if not date:
             continue
 
-        # リンク表示に明記された分類のみ使用。
-        # 詳しい取材名・演者名は推測しない。
-        detail = category
-
         key = (date, pref, shop, category, href)
+
         if key in seen:
             continue
+
         seen.add(key)
 
         event = make_event(
             date,
             pref,
             shop,
-            detail,
+            category,
             href
         )
 
@@ -271,9 +269,11 @@ def main():
     successful = []
     errors = []
 
+    # 3サイト・奈良県と大阪府の計6系統
     sources = [
         ("P-WORLD", PWORLD, scrape_pworld),
         ("ホルログ", HORULOG, scrape_horulog),
+        ("スロマップ", SLO_MAP, scrape_slo_map),
     ]
 
     for name, urls, scraper in sources:
@@ -300,6 +300,7 @@ def main():
                 errors.append(
                     f"{source_name}: {exc}"
                 )
+
                 print(
                     f"{source_name}: 取得失敗: {exc}",
                     flush=True
@@ -315,27 +316,30 @@ def main():
 
     merged = {}
 
-    # 既存のデータを維持
+    # 既存イベントを保持
     for item in previous:
         date = item.get("date", "")
+
         if not (min_date <= date <= max_date):
             continue
+
         if item.get("pref") not in ("奈良県", "大阪府"):
             continue
+
         if not item.get("shop") or not item.get("source"):
             continue
 
         merged[event_key(item)] = item
 
-    # 今回取得したデータを反映
+    # 新規取得イベントを追加
     for item in events:
         date = item.get("date", "")
+
         if not (min_date <= date <= max_date):
             continue
 
         key = event_key(item)
 
-        # 同じ日付・店舗・内容なら既存を優先
         if key not in merged:
             merged[key] = item
 
@@ -367,7 +371,7 @@ def main():
         encoding="utf-8"
     )
 
-    print(f"保存完了: {len(result)}件", flush=True)
+    print(f"保存完了: {len(result)}件")
     print(f"取得成功: {len(successful)}地域・サイト")
     print(f"取得エラー: {len(errors)}件")
 
