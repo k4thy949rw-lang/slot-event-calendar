@@ -1,55 +1,82 @@
 
 import requests
 from bs4 import BeautifulSoup
+import re
 
 SITES = {
     "ホルログ（奈良）": "https://horulog.com/nara/events",
     "スロマップ（奈良）": "https://slo-map.com/area/nara",
 }
 
-headers = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; EventCalendarCheck/1.0)"
 }
 
-print("=== イベント情報サイト接続テスト ===", flush=True)
+DATE_PATTERN = re.compile(
+    r"20\d{2}[/年.-]\d{1,2}[/月.-]\d{1,2}日?"
+    r"|\d{1,2}[/月]\d{1,2}日?"
+)
 
 for name, url in SITES.items():
-    print(f"\n【{name}】", flush=True)
+    print(f"\n========== {name} ==========", flush=True)
 
     try:
         response = requests.get(
-            url,
-            headers=headers,
-            timeout=20,
+            url, headers=HEADERS, timeout=25
         )
+        print("HTTP:", response.status_code)
 
-        print("HTTPステータス:", response.status_code)
-        print("最終URL:", response.url)
-        print("HTMLサイズ:", len(response.content))
+        if response.status_code != 200:
+            continue
 
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(response.text, "html.parser")
 
-            title = soup.title.get_text(
-                " ", strip=True
-            ) if soup.title else "なし"
+        for tag in soup(["script", "style", "noscript"]):
+            tag.decompose()
 
-            text = soup.get_text(" ", strip=True)
+        print("\n【日付を含む表示テキスト：最大15件】")
+        found = 0
 
-            print("ページタイトル:", title)
-            print("本文文字数:", len(text))
-            print("イベント関連語:", {
-                word: word in text
-                for word in [
-                    "奈良", "大阪", "来店", "取材", "イベント"
-                ]
-            })
-            print("結果: 接続成功（内容の検証は別途必要）")
-        else:
-            print("結果: アクセス失敗")
+        for line in soup.stripped_strings:
+            line = " ".join(line.split())
 
-    except requests.RequestException as e:
-        print("結果: 通信エラー")
+            if DATE_PATTERN.search(line):
+                print(repr(line[:180]))
+                found += 1
+
+                if found >= 15:
+                    break
+
+        print("日付候補数:", found)
+
+        print("\n【イベント関連リンク：最大15件】")
+        found = 0
+        seen = set()
+
+        for a in soup.find_all("a", href=True):
+            label = a.get_text(" ", strip=True)
+            href = requests.compat.urljoin(
+                response.url, a["href"]
+            )
+
+            if href in seen:
+                continue
+
+            if any(word in label + href for word in [
+                "来店", "取材", "イベント",
+                "event", "report", "shop"
+            ]):
+                seen.add(href)
+                print("表示:", label[:100])
+                print("URL:", href[:200])
+                found += 1
+
+                if found >= 15:
+                    break
+
+        print("リンク候補数:", found)
+
+    except Exception as e:
         print("エラー:", str(e))
 
-print("\n=== テスト終了 ===")
+print("\n=== 抽出テスト終了 ===")
