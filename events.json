@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-24T07:24:11+09:00",
+  "updated_at": "2026-10-25T07:18:45+09:00",
   "events": [
     {
       "date": "2026-10-21",
@@ -3856,6 +3856,16 @@
       "pref": "大阪府",
       "shop": "123+N羽曳野店",
       "city": "",
+      "type": "その他",
+      "detail": "IMPACT （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7998",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "123+N羽曳野店",
+      "city": "",
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%2BN%E7%BE%BD%E6%9B%B3%E9%87%8E%E5%BA%97",
@@ -3869,6 +3879,16 @@
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%E5%8C%97%E9%87%8E%E7%94%B0%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "123河内長野店",
+      "city": "",
+      "type": "その他",
+      "detail": "IMPACT （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7929",
       "confidence": "公開掲載情報"
     },
     {
@@ -3935,10 +3955,30 @@
       "date": "2026-10-25",
       "pref": "大阪府",
       "shop": "DAITOYO Prime",
+      "city": "大阪府大阪市北区小松原町4-32",
+      "type": "取材",
+      "detail": "取材 PS調査員☆取材ハイリマス☆ PR 10/25(日)10:00〜22:45 ☆入場整理券はセブンコンパスにて☆ 8",
+      "source": "https://www.p-world.co.jp/osaka/daitoyo-prime.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "DAITOYO Prime",
       "city": "",
       "type": "来店",
       "detail": "来店",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/DAITOYO%20Prime",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "HYPER ARROW 深井店",
+      "city": "大阪府堺市中区深井沢町3365",
+      "type": "来店",
+      "detail": "来店 3日連続！HYPERARROW深井店専属大使決定戦！ PR 10/25(日)10:00〜23:00 3日連続3名の演者様がHYPERARROW深井店宣伝大使の座をかけて対決実践致します！ 4",
+      "source": "https://www.p-world.co.jp/osaka/hyper-arrow.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -3964,21 +4004,61 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "NIKO NIKO 大和田店",
+      "city": "大阪府門真市常称寺町17-12",
+      "type": "来店",
+      "detail": "来店 SUPER PS調査員来店！ PR 10/25(日)10:00〜22:35 【ULTIMATE】！！ 34",
+      "source": "https://www.p-world.co.jp/osaka/nikoniko.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "P-ROOTs MANDORE",
       "city": "",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/P-ROOTs%20MANDORE",
+      "detail": "PS調査員来店(ピンク) （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7393",
       "confidence": "公開掲載情報"
     },
     {
       "date": "2026-10-25",
       "pref": "大阪府",
       "shop": "Platinum5",
-      "city": "",
+      "city": "大阪府大阪市阿倍野区阿倍野筋1-1-61",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/Platinum5",
+      "detail": "来店 ドン・ぱぱ～ノさん実践 PR 10/25(日) 46",
+      "source": "https://www.p-world.co.jp/osaka/platinum5.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "P．E．KING OF KINGS 1333 高槻",
+      "city": "大阪府高槻市辻子3丁目6-6",
+      "type": "取材",
+      "detail": "取材 フラッグコンボ PR 10/25(日) 30",
+      "source": "https://www.p-world.co.jp/osaka/king-of-kings.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "P．E．KING OF KINGS1007 大阪本店",
+      "city": "大阪府大阪市旭区高殿六丁目16番20号",
+      "type": "取材",
+      "detail": "取材 フラッグコンボ進撃・灯台 PR 10/25(日)10:00〜23:00 43",
+      "source": "https://www.p-world.co.jp/osaka/kok1007osakahonten.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "RITZ高槻店",
+      "city": "大阪府高槻市紺屋町1番1号グリ-ンプラザたかつき1号館B-104",
+      "type": "取材",
+      "detail": "取材 えりスロちゃん監修ペンタグラム PR 10/25(日)10:00〜 混雑が予想されますのでお早めにお越しください‼ 25",
+      "source": "https://www.p-world.co.jp/osaka/ritz-takatsukiten.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -3995,10 +4075,10 @@
       "date": "2026-10-25",
       "pref": "大阪府",
       "shop": "SUPER COSMO PREMIUM 柏原店",
-      "city": "",
+      "city": "大阪府柏原市片山町15番22号",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/SUPER%20COSMO%20PREMIUM%E6%9F%8F%E5%8E%9F%E5%BA%97",
+      "detail": "来店 ちえもんさん来店 PR 10/25(日)10:00〜 整理券配布は9：45～ 11",
+      "source": "https://www.p-world.co.jp/osaka/scpkashiwara.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4007,8 +4087,88 @@
       "shop": "SUPER COSMO PREMIUM 泉南店",
       "city": "",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/SUPER%20COSMO%20PREMIUM%E6%B3%89%E5%8D%97%E5%BA%97",
+      "detail": "PS調査員来店(虹) （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/8106",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "SUPER COSMO PREMIUM 泉南店",
+      "city": "大阪府泉南市信達市場1428-1",
+      "type": "取材",
+      "detail": "取材 【PS調査員来店】取材！！ PR 10/25(日)10:00〜22:50 整理券配布は9時20分となっております！ 23",
+      "source": "https://www.p-world.co.jp/osaka/scp-sennan.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "SUPER COSMO PREMIUM岸和田店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/SUPER%20COSMO%20PREMIUM%E5%B2%B8%E5%92%8C%E7%94%B0%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "VENICE東大阪店",
+      "city": "大阪府東大阪市川中3-30",
+      "type": "取材",
+      "detail": "取材 えりスロ『ペンタグラム取材』！ PR 10/25(日)10:00〜22:40 32",
+      "source": "https://www.p-world.co.jp/osaka/venice-higasshi.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "VERDE",
+      "city": "大阪府堺市西区鳳北町9-47",
+      "type": "来店",
+      "detail": "来店 パオキチさん来店 PR 10/25(日)10:00〜 41",
+      "source": "https://www.p-world.co.jp/osaka/verde.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "はりまや中もず店",
+      "city": "大阪府堺市北区百舌鳥梅北町5-472",
+      "type": "取材",
+      "detail": "取材 じーま。さん監修 輝煌絶景 PR 10/25(日) 47",
+      "source": "https://www.p-world.co.jp/osaka/harimaya-nakamozu.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "イル・サローネ大和田店",
+      "city": "大阪府門真市野里町5-1",
+      "type": "取材",
+      "detail": "取材 ジャンバリ潜入来店取材【煌】 PR 10/25(日) 10時OPEN！整理券は9:30配布！ジャグラー55台設置 44",
+      "source": "https://www.p-world.co.jp/osaka/elite.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "イル・サローネ泉佐野",
+      "city": "大阪府泉佐野市上町3丁目3番18号",
+      "type": "取材",
+      "detail": "取材 サンスポ取材 PR 10/25(日)10:00〜 整理券配布は9:45より実施いたします。 31",
+      "source": "https://www.p-world.co.jp/osaka/ir-saroune.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "イル・サローネ貝塚店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%A4%E3%83%AB%E3%82%B5%E3%83%AD%E3%83%BC%E3%83%8D%E8%B2%9D%E5%A1%9A%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4024,11 +4184,31 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "ガリバー摂津店",
+      "city": "大阪府摂津市別府2-30-14",
+      "type": "来店",
+      "detail": "来店 ぴえんちゃんさん来店（予定） PR 10/25(日)10:00〜 22",
+      "source": "https://www.p-world.co.jp/osaka/gulliver-s.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "ガリバー東大阪店",
       "city": "",
       "type": "取材",
       "detail": "ローテ取材 （7ジャッジ）",
       "source": "https://slo-map.com/halls/8072",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ガリバー東大阪店",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%AC%E3%83%AA%E3%83%90%E3%83%BC%E6%9D%B1%E5%A4%A7%E9%98%AA%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4047,8 +4227,78 @@
       "shop": "キコーナJR高槻駅前店",
       "city": "大阪府高槻市白梅町1-5",
       "type": "来店",
+      "detail": "来店 キコーナJR高槻駅前店★SINCE2025.12.25★ PR 10/25(日)10:00〜16:00 ★加藤やさしさ＆ジャスティン翔★ダブル来店予定★入場整理券配布予定→９時３０分★ 3",
+      "source": "https://www.p-world.co.jp/osaka/kicona-takatsuki.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "キコーナJR高槻駅前店",
+      "city": "大阪府高槻市白梅町1-5",
+      "type": "来店",
       "detail": "来店 キコーナJR高槻駅前店★SINCE2025.12.25★ PR 10/25(日)10:00〜16:00 ★加藤やさしさ＆ジャスティン翔★ダブル来店予定★入場整理券配布予定→９時３０分★ 49",
       "source": "https://www.p-world.co.jp/osaka/kicona-takatsuki.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "キコーナ茨木彩都店",
+      "city": "大阪府茨木市豊川3丁目1番5号",
+      "type": "取材",
+      "detail": "取材 ☆ジャンバリ潜入来店取材 雷☆ PR 10/25(日)10:00〜22:40 ◇ AM 10:00 OPEN！ ◇ 入場整理 9：45 ◇ 35",
+      "source": "https://www.p-world.co.jp/osaka/kicona-ibarakisaito.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "キコーナ野田南店",
+      "city": "大阪府大阪市福島区吉野1丁目20番23号",
+      "type": "来店",
+      "detail": "来店 ★蒼りなさん＆スロバニ極来店★ PR 10/25(日)10:00〜22:30 ☆抽選時間は9：30～！！ご来店、お待ちしております！！☆ 13",
+      "source": "https://www.p-world.co.jp/osaka/kicona-minami.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "グランキコーナ堺店",
+      "city": "大阪府堺市堺区翁橋町1丁7番1号",
+      "type": "来店",
+      "detail": "来店 10/25☆ヨシノブさん来店 PR 10/25(日)10:00〜 10月度☆最新機種☆17機種209台導入済み‼ 18",
+      "source": "https://www.p-world.co.jp/osaka/grankicona.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "グランキコーナ松原店",
+      "city": "大阪府松原市別所2丁目4番地12号",
+      "type": "来店",
+      "detail": "来店 七瀬静香さん来店‼ PR 10/25(日)10:00〜22:40 入場シャッフルは9:40開始‼ 24",
+      "source": "https://www.p-world.co.jp/osaka/grankicona-matsubara.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "グランキコーナ鶴見店",
+      "city": "大阪府大阪市鶴見区放出東一丁目2番地19号",
+      "type": "来店",
+      "detail": "来店 『成瀬心美』さん来店予定！！ PR 10/25(日)10:00〜22:30 38",
+      "source": "https://www.p-world.co.jp/osaka/grankicona-tsurumi.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "シェラパート３",
+      "city": "大阪府堺市北区南花田町420-4",
+      "type": "取材",
+      "detail": "取材 ジャンバリ潜入取材 PR 10/25(日)10:00〜22:35 ジャンバリ潜入取材",
+      "source": "https://www.p-world.co.jp/osaka/sierra3.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4064,6 +4314,26 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "ダイアナ枚方店",
+      "city": "大阪府枚方市甲斐田東町8-1",
+      "type": "来店",
+      "detail": "来店 出張洗車【ながらいおん】来店 PR 10/25(日)10:00〜 9:00よりLINE受付開始※雨天時は中止の場合もございます 28",
+      "source": "https://www.p-world.co.jp/osaka/himawari.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ダイアナ茨木店",
+      "city": "大阪府茨木市真砂1-11-25",
+      "type": "来店",
+      "detail": "来店 KIKKIさん実践来店!! PR 10/25(日)10:00〜 【25日】AM10時一斉OPEN!! 27",
+      "source": "https://www.p-world.co.jp/osaka/daiana.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "チャンピオン豊中店",
       "city": "",
       "type": "取材",
@@ -4074,11 +4344,61 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "ニコニコ住道店",
+      "city": "大阪府大東市住道1-2-22",
+      "type": "取材",
+      "detail": "取材 スクープTV全力取材ブルー PR 10/25(日)10:00〜22:30 33",
+      "source": "https://www.p-world.co.jp/osaka/suminodou-engel.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ニコニコ八尾山本店",
+      "city": "",
+      "type": "周年",
+      "detail": "周年情報 （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7867",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ニコニコ枚方店",
+      "city": "大阪府枚方市茄子作5-1240-1",
+      "type": "取材",
+      "detail": "取材 フラッグコンボ PR 10/25(日)10:00〜22:40 40",
+      "source": "https://www.p-world.co.jp/osaka/nikoniko-hirakata.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "パールサーティーン",
       "city": "",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%83%91%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%BC%E3%83%B3",
+      "detail": "PS調査員来店(ピンク) （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7456",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "パールサーティーン",
+      "city": "大阪府大阪市淀川区十三東2-9-7",
+      "type": "取材",
+      "detail": "取材 １０月２５日ＰＳ調査員取材予定 PR 10/25(日)10:00〜 7",
+      "source": "https://www.p-world.co.jp/osaka/pearl13.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "プレミアSLOT LAB淡路西店",
+      "city": "大阪府大阪市東淀川区淡路4-11-17",
+      "type": "来店",
+      "detail": "来店 ★☆伍代咲★☆様 来店 ☆★LIVE配信実践☆★ PR 10/25(日)10:00〜22:30 阪急淡路駅前唯一の【スロット専門店】全３レート 全２４３台 超ロケットスタートの予感！？ 2",
+      "source": "https://www.p-world.co.jp/osaka/premiere-east.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4094,6 +4414,26 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "プレミアSLOT LAB高槻店",
+      "city": "大阪府高槻市芥川町1-8-26",
+      "type": "来店",
+      "detail": "来店 旋回のSAYAさん実践来店！ PR 10/25(日) 9",
+      "source": "https://www.p-world.co.jp/osaka/premiere-slot-lab.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "プレミア高槻店",
+      "city": "大阪府高槻市芥川町1-8-27",
+      "type": "来店",
+      "detail": "来店 感謝を込めて PR 10/25(日)10:00〜23:00 10",
+      "source": "https://www.p-world.co.jp/osaka/premiere-t.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "ベガスベガス千里店",
       "city": "",
       "type": "来店",
@@ -4104,11 +4444,71 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
-      "shop": "マジックバード東三国",
-      "city": "",
+      "shop": "ベニス外環店",
+      "city": "大阪府東大阪市新町16-41",
+      "type": "取材",
+      "detail": "取材 でちゃう「花鳥風月(花)」！ PR 10/25(日)10:00〜23:00 ＡＭ9：30よりシャッフル整理券配布開始します。 42",
+      "source": "https://www.p-world.co.jp/osaka/goldvenice.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ベニス布施店本館・新館",
+      "city": "大阪府東大阪市足代北2-1-2",
+      "type": "取材",
+      "detail": "取材 PS調査員来店(虹)!! PR 10/25(日)10:00〜22:45 39",
+      "source": "https://www.p-world.co.jp/osaka/venice-fuse.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ベニス江坂新館・本館",
+      "city": "大阪府吹田市豊津町14-26",
       "type": "来店",
-      "detail": "来店",
-      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%83%9E%E3%82%B8%E3%83%83%E3%82%AF%E3%83%90%E3%83%BC%E3%83%89%E6%9D%B1%E4%B8%89%E5%9B%BD",
+      "detail": "来店 スロパチガール来店!! PR 10/25(日)10:00〜 16",
+      "source": "https://www.p-world.co.jp/osaka/venice-esaka-shinkan.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ベラジオ江の木町店",
+      "city": "大阪府吹田市江の木町1番27",
+      "type": "来店",
+      "detail": "来店 スロレコガール来店 PR 10/25(日)10:00〜22:30 【初】スロレコガール来店！ 29",
+      "source": "https://www.p-world.co.jp/osaka/bellagio-enoki.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ベラジオ深江橋店",
+      "city": "大阪府大阪市東成区深江北1-2-5",
+      "type": "取材",
+      "detail": "取材 ＫＯＢ取材（インパクト） PR 10/25(日)10:00〜22:40 ■抽選 9：45～ ■KING OF BELLAGIO取材 37",
+      "source": "https://www.p-world.co.jp/osaka/bellagio-fukaebashi.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "マジックバード東三国",
+      "city": "大阪府大阪市淀川区東三国5-4-1B’comビル",
+      "type": "来店",
+      "detail": "来店 スロシックス【うららさん】 PR 10/25(日) 36",
+      "source": "https://www.p-world.co.jp/osaka/magicbird.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "マジックバード２",
+      "city": "大阪府大阪市天王寺区玉造元町7-19",
+      "type": "取材",
+      "detail": "取材 えりスロちゃん監修マジバ取材 PR 10/25(日) スロット整理券は9：30より３階駐車場にて配布します。 45",
+      "source": "https://www.p-world.co.jp/osaka/magicbird2.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4174,11 +4574,31 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "ラクエンプラス",
+      "city": "大阪府堺市西区浜寺船尾町東2丁180番地",
+      "type": "来店",
+      "detail": "来店 セクシー女優ちゃんよたさん来店 PR 10/25(日) 26",
+      "source": "https://www.p-world.co.jp/osaka/rakuenplus.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "リッチウエル本店",
       "city": "",
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%83%AA%E3%83%83%E3%83%81%E3%82%A6%E3%82%A8%E3%83%AB%E6%9C%AC%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "上新庄一番",
+      "city": "大阪府大阪市東淀川区瑞光1-1-8",
+      "type": "来店",
+      "detail": "来店 美南ありりさん来店予定♪ PR 10/25(日)10:00〜22:45 10/25（日）10時OPEN☆抽選は9時45分 15",
+      "source": "https://www.p-world.co.jp/osaka/kamishinjyo-ichiban.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4194,11 +4614,101 @@
     {
       "date": "2026-10-25",
       "pref": "大阪府",
+      "shop": "１２３河内長野店",
+      "city": "大阪府河内長野市上原西町11-7",
+      "type": "取材",
+      "detail": "取材 エリア合同＿IMPACT取材 PR 10/25(日) 大阪第５エリア合同！入場整理券配付9時30分 19",
+      "source": "https://www.p-world.co.jp/osaka/kawachinagano123.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "１２３門真店",
+      "city": "大阪府門真市三ツ島３丁目１４番３８号",
+      "type": "取材",
+      "detail": "取材 スロパチステーション来店取材 PR 10/25(日) 6",
+      "source": "https://www.p-world.co.jp/osaka/123kadoma.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
       "shop": "１２３＋N松原店",
       "city": "大阪府松原市丹南1丁目317-1",
       "type": "取材",
       "detail": "取材 エリア5＿インパクト取材 PR 10/25(日)10:00〜 10月25日(日)全館堂々10時開幕＿入場整理券配付9時30 /hallList-body hallList-footer",
       "source": "https://www.p-world.co.jp/cgi-bin/touroku_in.cgi",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "１２３＋N松原店",
+      "city": "大阪府松原市丹南1丁目317-1",
+      "type": "取材",
+      "detail": "取材 エリア5＿インパクト取材 PR 10/25(日)10:00〜 10月25日(日)全館堂々10時開幕＿入場整理券配付9時30 5",
+      "source": "https://www.p-world.co.jp/osaka/123-matsubara.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "１２３＋Ｎ布施店",
+      "city": "大阪府東大阪市長堂3丁目3番28号",
+      "type": "取材",
+      "detail": "取材 ペンタグラム取材！ PR 10/25(日)10:00〜 入場整理券は9時30分より立体駐車場2Fにて配布致します。 20",
+      "source": "https://www.p-world.co.jp/osaka/123plus-n-fuseten.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "１２３＋Ｎ布施店",
+      "city": "大阪府東大阪市長堂3丁目3番28号",
+      "type": "来店",
+      "detail": "来店 きらりさん来店予定！ PR 10/25(日)10:00〜 入場整理券は9時30分より立体駐車場2Fにて配布致します。 21",
+      "source": "https://www.p-world.co.jp/osaka/123plus-n-fuseten.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ＡＲＲＯＷ 松原店",
+      "city": "大阪府松原市大堀1-1-7",
+      "type": "来店",
+      "detail": "来店 チャンゆなさん来店 PR 10/25(日)10:00〜23:00 AM 10:00 OPEN!! シャッフル9:45 14",
+      "source": "https://www.p-world.co.jp/osaka/arrow-matsubara.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ＨＹＰＥＲ Ｍ’ｓ",
+      "city": "大阪府大阪市淀川区西中島3-17-6",
+      "type": "来店",
+      "detail": "来店 超変身!ぽとちゃん実践来店💕 PR 10/25(日)10:00〜 ★★★★★25日[日]は9時30分迄より入場抽選を開始💕 12",
+      "source": "https://www.p-world.co.jp/osaka/as-ms.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "大阪府",
+      "shop": "ＴＥＮＩＣＨＩ 西成店",
+      "city": "大阪府大阪市西成区天下茶屋3丁目22番12号",
+      "type": "取材",
+      "detail": "取材 光の饗宴☆取材 PR 10/25(日)10:00〜 17",
+      "source": "https://www.p-world.co.jp/osaka/tenichi-nishinari.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "Premium Five",
+      "city": "奈良県生駒郡斑鳩町幸前1-13-29",
+      "type": "取材",
+      "detail": "取材 スピードランカー取材予定 PR 10/25(日)10:00〜22:40 4",
+      "source": "https://www.p-world.co.jp/nara/premiumfive.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4218,6 +4728,16 @@
       "city": "奈良県生駒郡斑鳩町幸前1-13-29",
       "type": "取材",
       "detail": "取材 スピードランカー取材予定 PR 10/25(日)10:00〜22:40 7",
+      "source": "https://www.p-world.co.jp/nara/premiumfive.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "Premium Five",
+      "city": "奈良県生駒郡斑鳩町幸前1-13-29",
+      "type": "来店",
+      "detail": "来店 やんばる☆めぐさん来店予定 PR 10/25(日)10:00〜22:40 3",
       "source": "https://www.p-world.co.jp/nara/premiumfive.htm",
       "confidence": "公開掲載情報"
     },
@@ -4287,6 +4807,16 @@
       "shop": "ベニス奈良店",
       "city": "",
       "type": "取材",
+      "detail": "スロパチステーション来店取材(紫) （スロパチステーション）",
+      "source": "https://slo-map.com/halls/6846",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "ベニス奈良店",
+      "city": "",
+      "type": "取材",
       "detail": "ペンタグラム取材 （その他取材・企画）",
       "source": "https://slo-map.com/halls/6846",
       "confidence": "公開掲載情報"
@@ -4319,6 +4849,26 @@
       "type": "来店",
       "detail": "来店",
       "source": "https://horulog.com/hall/%E5%A5%88%E8%89%AF%E7%9C%8C/%E3%83%9E%E3%83%AB%E3%83%8F%E3%83%B3%E4%B8%8A%E7%89%A7%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "",
+      "type": "来店",
+      "detail": "必勝本ライター来店情報 （パチスロ必勝本）",
+      "source": "https://slo-map.com/halls/6847",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "奈良県奈良市大安寺西3-10-5",
+      "type": "来店",
+      "detail": "来店 守山あにきさん来店 PR 10/25(日) 朝10時開店 抽選開始は9時40分 2",
+      "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4375,6 +4925,16 @@
       "date": "2026-10-25",
       "pref": "奈良県",
       "shop": "マルハン橿原北店",
+      "city": "",
+      "type": "来店",
+      "detail": "必勝本ライター来店情報 （パチスロ必勝本）",
+      "source": "https://slo-map.com/halls/6879",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-25",
+      "pref": "奈良県",
+      "shop": "マルハン橿原北店",
       "city": "奈良県橿原市十市町443",
       "type": "来店",
       "detail": "来店 来店：ゆく夫来店！！ PR 10/25(日)10:00〜23:00 朝10時開店 LINE抽選朝８時～9時39分まで",
@@ -4386,9 +4946,129 @@
       "pref": "大阪府",
       "shop": "123+N羽曳野店",
       "city": "",
+      "type": "その他",
+      "detail": "スロパチ番組収録 （スロパチステーション）",
+      "source": "https://slo-map.com/halls/7998",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "123+N羽曳野店",
+      "city": "",
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%2BN%E7%BE%BD%E6%9B%B3%E9%87%8E%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "HYPER ARROW 深井店",
+      "city": "大阪府堺市中区深井沢町3365",
+      "type": "取材",
+      "detail": "取材 10月26日（月）S級ホール調査『赤』 PR 10/26(月)10:00〜23:00 50",
+      "source": "https://www.p-world.co.jp/osaka/hyper-arrow.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "SUPER COSMO PREMIUM 泉南店",
+      "city": "",
+      "type": "取材",
+      "detail": "7DAYS LIVE取材 （リアルモガミ）",
+      "source": "https://slo-map.com/halls/8106",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "キコーナ吹田店",
+      "city": "大阪府吹田市西御旅町7-58",
+      "type": "取材",
+      "detail": "取材 ☆パチスロの党取材・宴SLASH☆るるたんさん来店☆ PR 10/26(月) 10月26日AM10時OPEN！宴SLASH取材！＆るるたんさん来店！入場整理9:30！ 49",
+      "source": "https://www.p-world.co.jp/osaka/kicona-suita.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ダイアナ大畑店",
+      "city": "",
+      "type": "取材",
+      "detail": "アツ姫熱血取材 （アツ姫）",
+      "source": "https://slo-map.com/halls/7758",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ベガスベガス泉大津店",
+      "city": "",
+      "type": "取材",
+      "detail": "大喰漢取材 （スクープTV）",
+      "source": "https://slo-map.com/halls/7747",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ベニス外環店",
+      "city": "",
+      "type": "来店",
+      "detail": "SUPER PS調査員来店 RED （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/12487",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ベニス布施店本館・新館",
+      "city": "",
+      "type": "来店",
+      "detail": "PS調査員来店(赤) （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/8091",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ミスターパチンコ泉大津店",
+      "city": "",
+      "type": "来店",
+      "detail": "PS調査員来店(ピンク) （DMMぱちタウン）",
+      "source": "https://slo-map.com/halls/7742",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "大阪ホール天満店",
+      "city": "",
+      "type": "取材",
+      "detail": "シンアルティメット取材SLOT ver. （ジャンバリ.TV）",
+      "source": "https://slo-map.com/halls/7533",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "大阪府",
+      "shop": "ＢＡＮＢＡＮ＋１",
+      "city": "大阪府大阪市都島区東野田町3丁目8番2号",
+      "type": "周年",
+      "detail": "来店 ２６日(月)周年日★大人気アイドル演者◆えりスロちゃん来店！ PR 10/26(月)09:30〜22:50 １０月２６日(月)朝９時４０分抽選開始！！お客様のご来店スタッフ一同心よりお待ちしております！！ /hallList-body hallList-footer",
+      "source": "https://www.p-world.co.jp/cgi-bin/touroku_in.cgi",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "奈良県",
+      "shop": "スーパードーム大和高田店",
+      "city": "",
+      "type": "来店",
+      "detail": "ピクルスくん(スロ汁TV。)来店 （その他取材・企画）",
+      "source": "https://slo-map.com/halls/6854",
       "confidence": "公開掲載情報"
     },
     {
@@ -4405,10 +5085,60 @@
       "date": "2026-10-26",
       "pref": "奈良県",
       "shop": "マルハン大安寺店",
+      "city": "",
+      "type": "来店",
+      "detail": "JBメンバーズ・タレント来店 （ジャンバリ.TV）",
+      "source": "https://slo-map.com/halls/6847",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "",
+      "type": "取材",
+      "detail": "ジャンバリ潜入来店取材雷 （ジャンバリ.TV）",
+      "source": "https://slo-map.com/halls/6847",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "奈良県奈良市大安寺西3-10-5",
+      "type": "取材",
+      "detail": "取材 ジャンバリ来店潜入取材 雷 PR 10/26(月)10:00〜23:00 朝10時開店 抽選開始は9時40分 6",
+      "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-26",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
       "city": "奈良県奈良市大安寺西3-10-5",
       "type": "取材",
       "detail": "取材 ジャンバリ来店潜入取材 雷 PR 10/26(月)10:00〜23:00 朝10時開店 抽選開始は9時40分 8",
       "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "123東大阪店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%E6%9D%B1%E5%A4%A7%E9%98%AA%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "123難波店",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%E9%9B%A3%E6%B3%A2%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4419,6 +5149,36 @@
       "type": "来店",
       "detail": "来店",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/HYPER%20ARROW%E7%BE%8E%E5%8E%9F%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "MEGAフェイス1300淀川",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/MEGA%E3%83%95%E3%82%A7%E3%82%A4%E3%82%B91300%E6%B7%80%E5%B7%9D",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "P.E.KING OF KINGS 1333 高槻店",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/P.E.KING%20OF%20KINGS%201333%20%E9%AB%98%E6%A7%BB",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "SUPER COSMO PREMIUM堺店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/SUPER%20COSMO%20PREMIUM%E5%A0%BA%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4449,6 +5209,16 @@
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%BA%E8%B1%8A%E4%B8%AD%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-27",
+      "pref": "大阪府",
+      "shop": "キクヤ堺本店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%AD%E3%82%AF%E3%83%A4%E5%A0%BA%E6%9C%AC%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4514,6 +5284,16 @@
     {
       "date": "2026-10-28",
       "pref": "大阪府",
+      "shop": "123泉北店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/123%E6%B3%89%E5%8C%97%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-28",
+      "pref": "大阪府",
       "shop": "SUPER COSMO PREMIUM和泉店",
       "city": "",
       "type": "取材",
@@ -4549,6 +5329,26 @@
       "type": "取材",
       "detail": "取材",
       "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%BA%E5%8D%97%E4%BD%8F%E5%90%89%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-28",
+      "pref": "大阪府",
+      "shop": "ニコニコ枚方店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%83%8B%E3%82%B3%E3%83%8B%E3%82%B3%E6%9E%9A%E6%96%B9%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-28",
+      "pref": "大阪府",
+      "shop": "マルハン寝屋川店",
+      "city": "",
+      "type": "取材",
+      "detail": "取材",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%83%9E%E3%83%AB%E3%83%8F%E3%83%B3%E5%AF%9D%E5%B1%8B%E5%B7%9D%E5%BA%97",
       "confidence": "公開掲載情報"
     },
     {
@@ -4603,6 +5403,16 @@
     },
     {
       "date": "2026-10-30",
+      "pref": "大阪府",
+      "shop": "グランキコーナ堺店",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%B0%E3%83%A9%E3%83%B3%E3%82%AD%E3%82%B3%E3%83%BC%E3%83%8A%E5%A0%BA%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-30",
       "pref": "奈良県",
       "shop": "SUPER COSMO PREMIUM香芝店",
       "city": "",
@@ -4618,6 +5428,16 @@
       "city": "奈良県奈良市大安寺西3-10-5",
       "type": "取材",
       "detail": "取材 アツ姫独自取材 剛腕のリアル PR 10/30(金) 朝10時開店 抽選開始は9時40分",
+      "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-31",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "奈良県奈良市大安寺西3-10-5",
+      "type": "取材",
+      "detail": "取材 新アルティメット取材 PR 10/31(土) 朝10時開店 抽選開始は9時40分 10",
       "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
       "confidence": "公開掲載情報"
     },
@@ -4664,11 +5484,41 @@
     {
       "date": "2026-10-31",
       "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "奈良県奈良市大安寺西3-10-5",
+      "type": "取材",
+      "detail": "取材 超エクソシスト取材 PR 10/31(土) 朝10時開店 抽選開始は9時40分 9",
+      "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-10-31",
+      "pref": "奈良県",
       "shop": "マルハン橿原北店",
       "city": "奈良県橿原市十市町443",
       "type": "取材",
       "detail": "取材 取材：S級ホール調査赤！ PR 10/31(土)10:00〜23:00 朝10時開店 LINE抽選朝８時～9時39分まで",
       "source": "https://www.p-world.co.jp/nara/maruhan-kashihara-k.htm",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-11-01",
+      "pref": "大阪府",
+      "shop": "キコーナタウン茨木彩都店",
+      "city": "",
+      "type": "来店",
+      "detail": "来店",
+      "source": "https://horulog.com/hall/%E5%A4%A7%E9%98%AA%E5%BA%9C/%E3%82%AD%E3%82%B3%E3%83%BC%E3%83%8A%E3%82%BF%E3%82%A6%E3%83%B3%E8%8C%A8%E6%9C%A8%E5%BD%A9%E9%83%BD%E5%BA%97",
+      "confidence": "公開掲載情報"
+    },
+    {
+      "date": "2026-11-01",
+      "pref": "奈良県",
+      "shop": "マルハン大安寺店",
+      "city": "奈良県奈良市大安寺西3-10-5",
+      "type": "取材",
+      "detail": "取材 スロパチ来店取材 PR 11/01(日)10:00〜23:00 朝10時開店 抽選開始は9時40分 12",
+      "source": "https://www.p-world.co.jp/nara/maruhan-daianji.htm",
       "confidence": "公開掲載情報"
     },
     {
@@ -4742,6 +5592,6 @@
       "スロマップ/大阪府"
     ],
     "errors": [],
-    "total": 473
+    "total": 558
   }
 }
